@@ -1,7 +1,6 @@
-
 public class BasicBigDecimal {
 
-	public static String divide(double firstNum, double secondNum , int digit) {
+	public static String divide(double firstNum, double secondNum, int digit) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -47,9 +46,9 @@ public class BasicBigDecimal {
 	}
 
 	public static void main(String[] args) {
-		double x = 7878;
-		double y = 6786786.657567234;
-		System.out.println(BasicBigDecimal.divide(x, y , 435));
+		double x = 30;
+		double y = 70;
+		System.out.println(BasicBigDecimal.divide(x, y, 100));
 		System.out.println(x / y);
 	}
 
