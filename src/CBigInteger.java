@@ -31,6 +31,7 @@ public class CBigInteger {
 	 */
 	public static String add(String one, String two) {
 
+		
 		one = isProPerNumber(one) ? one : replaceProPerNumber(one);
 		two = isProPerNumber(two) ? two : replaceProPerNumber(two);
 
@@ -71,41 +72,27 @@ public class CBigInteger {
 	 * 
 	 * 가장 많은 정수 값을 저장할수 있는 long타입이 최대 19자리까지 저장할 수 있으므로 각 숫자를 18자리 나누어 long타입 배열에
 	 * 저장합니다. 한 자리를 적게 한 이유는 연산을 했을 때 자리올림에 대하여 발생하는 오버플로우를 방지하기 위합입니다. 정확한 자리를 위해
-	 * 뒷자리수부터 18자리씩 나누어 저장합니다. 그 후 계산의 편의를 위해 저장한 배열을 reverse합니다.
+	 * 뒷자리수부터 18자리씩 나누어 저장합니다.
 	 * 
 	 * @param one 들어오는 첫번째 피연산자(문자열) 문자열에 저장한 이유는 long 범위를 벗어나는 숫자에 대한 정보를 가져오기
 	 *            위함입니다.
 	 * @param two 들어오는 첫번째 피연산자(문자열)
 	 * 
 	 */
-	private static void subNumber(String one, String two) {
+	private static void subNumber(String one, String two) {	
 		int oneLength = one.length() / 18 + 1;
 		int twoLength = two.length() / 18 + 1;
 		int index = 0;
 
 		CBigInteger.one = new long[oneLength];
 		CBigInteger.two = new long[twoLength];
-
-		for (index = 0; index < oneLength * 18; index += 18)
-			CBigInteger.one[oneLength - index / 18 - 1] = Long
-					.parseLong(one.substring(index, index + 18 > one.length() ? one.length() : index + 18));
-		for (index = 0; index < twoLength * 18; index += 18)
-			CBigInteger.two[twoLength - index / 18 - 1] = Long
-					.parseLong(two.substring(index, index + 18 > two.length() ? two.length() : index + 18));
-
-		// reverse
-		for (int i = 0; i < CBigInteger.one.length / 2; i++) {
-			long temp = CBigInteger.one[CBigInteger.one.length - 1 - i];
-			CBigInteger.one[CBigInteger.one.length - 1 - i] = CBigInteger.one[i];
-			CBigInteger.one[i] = temp;
-		}
-
-		for (int i = 0; i < CBigInteger.two.length / 2; i++) {
-			long temp = CBigInteger.two[CBigInteger.two.length - 1 - i];
-			CBigInteger.two[CBigInteger.two.length - 1 - i] = CBigInteger.two[i];
-			CBigInteger.two[i] = temp;
-		}
-
+		for (index = one.length(); index >= 0 ; index -= 18) 
+			CBigInteger.one[(oneLength - 1) - index / 18] = Long
+					.parseLong(one.substring(index - 18 < 0 ? 0 : index-18, index));
+		
+		for (index = two.length(); index >= 0 ; index -= 18)
+			CBigInteger.two[(twoLength - 1) - index / 18] = Long
+					.parseLong(two.substring(index - 18 < 0 ? 0 : index-18, index));
 	}
 
 	/**
@@ -232,7 +219,7 @@ public class CBigInteger {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(add("1", "0000000000000000000000000000000000000000000000000000000000"));
+		System.out.println(add("9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999", "9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"));
 
 	}
 
